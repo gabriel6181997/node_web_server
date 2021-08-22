@@ -2,9 +2,16 @@ const path = require("path");
 const express = require("express");
 
 const app = express();
-const publicDirectoryPath = path.join(__dirname, "../public");
 
+// Define paths for Express config
+const publicDirectoryPath = path.join(__dirname, "../public");
+const viewPath = path.join(__dirname, "../templates");
+
+// Setup handlebars engine and views location
 app.set("view engine", "hbs");
+app.set("views", viewPath);
+
+// Setup static directory to serve
 app.use(express.static(publicDirectoryPath));
 
 app.get("", (req, res) => {
@@ -13,11 +20,11 @@ app.get("", (req, res) => {
 
 app.get("/about", (req, res) => {
   res.render("about", { title: "About Me", name: "Gabriel Wong me" });
-})
+});
 
 app.get("/help", (req, res) => {
   res.render("help", { helpText: "This is some helpful text." });
-})
+});
 
 app.get("/weather", (req, res) => {
   res.send({
